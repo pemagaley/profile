@@ -1,718 +1,949 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Professional Profile</title>
-  <script src="/_sdk/element_sdk.js"></script>
-  <style>
-        body {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100%;
-            color: #2d3748;
-        }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Professional Profile</title>
+    <script src="/_sdk/element_sdk.js"></script>
+    <style>
+      body {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: linear-gradient(135deg, #92c7f5 0%, #2343f5 100%);
+        min-height: 100%;
+        color: #2d3748;
+      }
 
-        html {
-            height: 100%;
-        }
+      html {
+        height: 100%;
+      }
 
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .profile-header {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .profile-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #4f46e5, #06b6d4, #10b981);
+      }
+
+      .profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4f46e5, #06b6d4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: white;
+        font-weight: bold;
+        box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+        flex-shrink: 0;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .profile-avatar-initials {
+        position: relative;
+        z-index: 1;
+      }
+
+      .profile-info-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .profile-text {
+        text-align: left;
+      }
+
+      .profile-name {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #1a202c;
+      }
+
+      .profile-title {
+        font-size: 1.25rem;
+        color: #4f46e5;
+        margin-bottom: 0;
+        font-weight: 500;
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #64748b;
+        font-size: 0.95rem;
+      }
+
+      .nav-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .nav-tab {
+        background: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: 600;
+        color: #64748b;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-tab:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .nav-tab.active {
+        background: #4f46e5;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .content-section {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+
+      .content-section.active {
+        display: block;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1a202c;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .section-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #4f46e5, #06b6d4);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      .experience-item,
+      .education-item,
+      .project-item,
+      .publication-item {
+        border-left: 4px solid #4f46e5;
+        padding-left: 2rem;
+        margin-bottom: 2rem;
+        position: relative;
+      }
+
+      .experience-item::before,
+      .education-item::before,
+      .project-item::before,
+      .publication-item::before {
+        content: "";
+        position: absolute;
+        left: -8px;
+        top: 0;
+        width: 12px;
+        height: 12px;
+        background: #4f46e5;
+        border-radius: 50%;
+      }
+
+      .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .item-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1a202c;
+      }
+
+      .item-company,
+      .item-institution {
+        color: #4f46e5;
+        font-weight: 500;
+      }
+
+      .item-date {
+        background: #f1f5f9;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        color: #64748b;
+        font-weight: 500;
+      }
+
+      .item-description {
+        color: #64748b;
+        line-height: 1.6;
+        margin-top: 1rem;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .skill-category {
+        background: #f8fafc;
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid #e2e8f0;
+      }
+
+      .skill-category h3 {
+        color: #1a202c;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .skill-tag {
+        background: #4f46e5;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      .project-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .project-link {
+        background: #4f46e5;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .project-link:hover {
+        background: #3730a3;
+        transform: translateY(-1px);
+      }
+
+      .about-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #4a5568;
+        text-align: justify;
+      }
+
+      @media (max-width: 768px) {
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+          padding: 1rem;
         }
 
         .profile-header {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+          padding: 2rem;
         }
 
-        .profile-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #4f46e5, #06b6d4, #10b981);
+        .profile-info-container {
+          flex-direction: column;
+          gap: 1.5rem;
         }
 
-        .profile-avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4f46e5, #06b6d4);
-            margin: 0 auto 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-            font-weight: bold;
-            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+        .profile-text {
+          text-align: center;
         }
 
         .profile-name {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: #1a202c;
-        }
-
-        .profile-title {
-            font-size: 1.25rem;
-            color: #4f46e5;
-            margin-bottom: 1rem;
-            font-weight: 500;
+          font-size: 2rem;
         }
 
         .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #64748b;
-            font-size: 0.95rem;
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem;
         }
 
         .nav-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+          gap: 0.5rem;
         }
 
         .nav-tab {
-            background: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            color: #64748b;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .nav-tab:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .nav-tab.active {
-            background: #4f46e5;
-            color: white;
-            transform: translateY(-2px);
+          padding: 0.75rem 1.5rem;
+          font-size: 0.9rem;
         }
 
         .content-section {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .section-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #4f46e5, #06b6d4);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .experience-item, .education-item, .project-item, .publication-item {
-            border-left: 4px solid #4f46e5;
-            padding-left: 2rem;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .experience-item::before, .education-item::before, .project-item::before, .publication-item::before {
-            content: '';
-            position: absolute;
-            left: -8px;
-            top: 0;
-            width: 12px;
-            height: 12px;
-            background: #4f46e5;
-            border-radius: 50%;
+          padding: 2rem;
         }
 
         .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
+          flex-direction: column;
+          align-items: flex-start;
         }
-
-        .item-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1a202c;
-        }
-
-        .item-company, .item-institution {
-            color: #4f46e5;
-            font-weight: 500;
-        }
-
-        .item-date {
-            background: #f1f5f9;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .item-description {
-            color: #64748b;
-            line-height: 1.6;
-            margin-top: 1rem;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .skill-category {
-            background: #f8fafc;
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .skill-category h3 {
-            color: #1a202c;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .skill-tag {
-            background: #4f46e5;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .project-link {
-            background: #4f46e5;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .project-link:hover {
-            background: #3730a3;
-            transform: translateY(-1px);
-        }
-
-        .about-content {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #4a5568;
-            text-align: justify;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            .profile-header {
-                padding: 2rem;
-            }
-            
-            .profile-name {
-                font-size: 2rem;
-            }
-            
-            .contact-info {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-            
-            .nav-tabs {
-                gap: 0.5rem;
-            }
-            
-            .nav-tab {
-                padding: 0.75rem 1.5rem;
-                font-size: 0.9rem;
-            }
-            
-            .content-section {
-                padding: 2rem;
-            }
-            
-            .item-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
+      }
     </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
- </head>
- <body>
-  <div class="container"><!-- Profile Header -->
-   <div class="profile-header">
-    <!--<div class="profile-avatar" id="profileAvatar">
-     PG
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-info-container">
+          <div class="profile-avatar" id="profileAvatar">
+            <img
+              id="profileImage"
+              src="profile.png"
+              alt="Profile"
+              style="display: none"
+              onerror="this.style.display='none'; document.getElementById('profileInitials').style.display='block';"
+            />
+            <span id="profileInitials" class="profile-avatar-initials">PG</span>
+          </div>
+          <div class="profile-text">
+            <h1 class="profile-name" id="profileName">Mr. Pema Galey</h1>
+            <p class="profile-title" id="profileTitle">
+              Lecturer, Researcher &amp; Application Developer
+            </p>
+          </div>
+        </div>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span>📧</span>
+            <span id="emailAddress">pemagaley.cst@rub.edu.bt</span>
+          </div>
+          <div class="contact-item">
+            <span>📱</span> <span id="phoneNumber">+975 17682761</span>
+          </div>
+          <div class="contact-item">
+            <span>📍</span> <span id="locationText">College of Science and Technology, Rinchending, Phuentsholing</span>
+          </div>
+        </div>
+      </div>
+      <!-- Navigation Tabs -->
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showSection('about')">
+          About Me
+        </button>
+        <button class="nav-tab" onclick="showSection('experience')">
+          Experience
+        </button>
+        <button class="nav-tab" onclick="showSection('education')">
+          Education
+        </button>
+        <button class="nav-tab" onclick="showSection('projects')">
+          Projects
+        </button>
+        <button class="nav-tab" onclick="showSection('publications')">
+          Publications
+        </button>
+        <button class="nav-tab" onclick="showSection('skills')">Skills</button>
+      </div>
+      <!-- About Me Section -->
+      <div id="about" class="content-section active">
+        <h2 class="section-title">
+          <div class="section-icon">👋</div>
+          About Me
+        </h2>
+        <div class="about-content" id="aboutText">
+          I am a passionate software engineer and research scientist with over 8
+          years of experience in developing innovative solutions at the
+          intersection of technology and research. My expertise spans machine
+          learning, distributed systems, and full-stack development. I thrive on
+          solving complex problems and translating cutting-edge research into
+          practical applications that make a real-world impact. Throughout my
+          career, I have led cross-functional teams, published research in
+          top-tier conferences, and built scalable systems serving millions of
+          users. I am particularly interested in AI ethics, sustainable
+          technology, and mentoring the next generation of engineers.
+        </div>
+      </div>
+      <!-- Experience Section -->
+      <div id="experience" class="content-section">
+        <h2 class="section-title">
+          <div class="section-icon">💼</div>
+          Professional Experience
+        </h2>
+        <div class="experience-item">
+          <div class="item-header">
+            <div>
+              <div class="item-title">Senior Software Engineer</div>
+              <div class="item-company">Tech Innovations Inc.</div>
+            </div>
+            <div class="item-date">2021 - Present</div>
+          </div>
+          <div class="item-description">
+            Lead a team of 8 engineers developing AI-powered analytics platform.
+            Architected microservices handling 10M+ daily requests. Implemented
+            ML pipelines reducing processing time by 60%. Mentored junior
+            developers and established best practices for code quality and
+            deployment.
+          </div>
+        </div>
+        <div class="experience-item">
+          <div class="item-header">
+            <div>
+              <div class="item-title">Research Scientist</div>
+              <div class="item-company">University Research Lab</div>
+            </div>
+            <div class="item-date">2019 - 2021</div>
+          </div>
+          <div class="item-description">
+            Conducted research in machine learning and natural language
+            processing. Published 12 papers in top-tier conferences including
+            NeurIPS and ICML. Developed novel algorithms for text classification
+            achieving state-of-the-art results. Collaborated with industry
+            partners on technology transfer.
+          </div>
+        </div>
+        <div class="experience-item">
+          <div class="item-header">
+            <div>
+              <div class="item-title">Software Developer</div>
+              <div class="item-company">StartupXYZ</div>
+            </div>
+            <div class="item-date">2017 - 2019</div>
+          </div>
+          <div class="item-description">
+            Full-stack development of web applications using React, Node.js, and
+            PostgreSQL. Built real-time collaboration features serving 50K+
+            users. Optimized database queries improving response times by 40%.
+            Participated in product planning and user experience design.
+          </div>
+        </div>
+      </div>
+      <!-- Education Section -->
+      <div id="education" class="content-section">
+        <h2 class="section-title">
+          <div class="section-icon">🎓</div>
+          Education
+        </h2>
+        <div class="education-item">
+          <div class="item-header">
+            <div>
+              <div class="item-title">Ph.D. in Computer Science</div>
+              <div class="item-institution">Stanford University</div>
+            </div>
+            <div class="item-date">2015 - 2019</div>
+          </div>
+          <div class="item-description">
+            Dissertation: "Advanced Machine Learning Techniques for Natural
+            Language Understanding" <br />
+            Advisor: Prof. John Smith | GPA: 3.9/4.0 <br />
+            Relevant Coursework: Machine Learning, Deep Learning, Natural
+            Language Processing, Distributed Systems
+          </div>
+        </div>
+        <div class="education-item">
+          <div class="item-header">
+            <div>
+              <div class="item-title">M.S. in Computer Science</div>
+              <div class="item-institution">MIT</div>
+            </div>
+            <div class="item-date">2013 - 2015</div>
+          </div>
+          <div class="item-description">
+            Specialization in Artificial Intelligence and Software Engineering
+            <br />
+            Thesis: "Scalable Algorithms for Large-Scale Data Processing" <br />
+            GPA: 3.8/4.0 | Dean's List
+          </div>
+        </div>
+        <div class="education-item">
+          <div class="item-header">
+            <div>
+              <div class="item-title">B.S. in Computer Engineering</div>
+              <div class="item-institution">UC Berkeley</div>
+            </div>
+            <div class="item-date">2009 - 2013</div>
+          </div>
+          <div class="item-description">
+            Magna Cum Laude | Phi Beta Kappa Honor Society <br />
+            Senior Project: "Distributed Computing Framework for Real-time
+            Analytics" <br />
+            GPA: 3.7/4.0
+          </div>
+        </div>
+      </div>
+      <!-- Projects Section -->
+      <div id="projects" class="content-section">
+        <h2 class="section-title">
+          <div class="section-icon">🚀</div>
+          Featured Projects
+        </h2>
+        <div class="project-item">
+          <div class="item-header">
+            <div>
+              <div class="item-title">AI-Powered Code Review Assistant</div>
+            </div>
+            <div class="item-date">2023</div>
+          </div>
+          <div class="item-description">
+            Developed an intelligent code review system using transformer models
+            to automatically detect bugs, suggest improvements, and ensure
+            coding standards. Integrated with GitHub and GitLab, serving 1000+
+            developers across multiple organizations.
+          </div>
+          <div class="project-links">
+            <a
+              href="#"
+              class="project-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >🔗 Live Demo</a
+            >
+            <a
+              href="#"
+              class="project-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >📁 GitHub</a
+            >
+          </div>
+        </div>
+        <div class="project-item">
+          <div class="item-header">
+            <div>
+              <div class="item-title">Real-time Collaboration Platform</div>
+            </div>
+            <div class="item-date">2022</div>
+          </div>
+          <div class="item-description">
+            Built a scalable real-time collaboration platform supporting
+            document editing, video calls, and project management. Implemented
+            using WebRTC, Socket.io, and React. Handles 10K+ concurrent users
+            with sub-100ms latency.
+          </div>
+          <div class="project-links">
+            <a
+              href="#"
+              class="project-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >🔗 Live Demo</a
+            >
+            <a
+              href="#"
+              class="project-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >📄 Case Study</a
+            >
+          </div>
+        </div>
+        <div class="project-item">
+          <div class="item-header">
+            <div>
+              <div class="item-title">Open Source ML Library</div>
+            </div>
+            <div class="item-date">2021</div>
+          </div>
+          <div class="item-description">
+            Created and maintain an open-source machine learning library for
+            text processing with 5K+ GitHub stars. Provides easy-to-use APIs for
+            common NLP tasks including sentiment analysis, named entity
+            recognition, and text classification.
+          </div>
+          <div class="project-links">
+            <a
+              href="#"
+              class="project-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >📁 GitHub</a
+            >
+            <a
+              href="#"
+              class="project-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >📚 Documentation</a
+            >
+          </div>
+        </div>
+      </div>
+      <!-- Publications Section -->
+      <div id="publications" class="content-section">
+        <h2 class="section-title">
+          <div class="section-icon">📚</div>
+          Publications &amp; Research
+        </h2>
+        <div class="publication-item">
+          <div class="item-header">
+            <div>
+              <div class="item-title">
+                "Efficient Neural Networks for Large-Scale Text Classification"
+              </div>
+            </div>
+            <div class="item-date">2023</div>
+          </div>
+          <div class="item-description">
+            <strong>Conference:</strong> Neural Information Processing Systems
+            (NeurIPS 2023) <br /><strong>Authors:</strong> Jane Doe, John Smith,
+            Alice Johnson <br /><strong>Abstract:</strong> We propose a novel
+            architecture for text classification that achieves state-of-the-art
+            results while reducing computational requirements by 40%. Our
+            approach combines attention mechanisms with efficient sparse
+            representations.
+          </div>
+        </div>
+        <div class="publication-item">
+          <div class="item-header">
+            <div>
+              <div class="item-title">
+                "Scalable Machine Learning Systems: A Practitioner's Guide"
+              </div>
+            </div>
+            <div class="item-date">2022</div>
+          </div>
+          <div class="item-description">
+            <strong>Journal:</strong> ACM Transactions on Intelligent Systems
+            and Technology <br /><strong>Authors:</strong> Jane Doe, Michael
+            Brown <br /><strong>Abstract:</strong> This paper presents best
+            practices and architectural patterns for building scalable machine
+            learning systems in production environments, based on our experience
+            deploying ML models at scale.
+          </div>
+        </div>
+        <div class="publication-item">
+          <div class="item-header">
+            <div>
+              <div class="item-title">
+                "Real-time Natural Language Processing in Distributed Systems"
+              </div>
+            </div>
+            <div class="item-date">2021</div>
+          </div>
+          <div class="item-description">
+            <strong>Conference:</strong> International Conference on Machine
+            Learning (ICML 2021) <br /><strong>Authors:</strong> Jane Doe, Sarah
+            Wilson, David Lee <br /><strong>Abstract:</strong> We introduce a
+            framework for real-time NLP processing in distributed environments,
+            achieving sub-second response times for complex language
+            understanding tasks.
+          </div>
+        </div>
+      </div>
+      <!-- Skills Section -->
+      <div id="skills" class="content-section">
+        <h2 class="section-title">
+          <div class="section-icon">⚡</div>
+          Skills &amp; Technologies
+        </h2>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3>Programming Languages</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">C++</span>
+              <span class="skill-tag">Go</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Machine Learning &amp; AI</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">TensorFlow</span>
+              <span class="skill-tag">PyTorch</span>
+              <span class="skill-tag">Scikit-learn</span>
+              <span class="skill-tag">Transformers</span>
+              <span class="skill-tag">OpenAI API</span>
+              <span class="skill-tag">MLflow</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Web Technologies</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">Express</span>
+              <span class="skill-tag">Next.js</span>
+              <span class="skill-tag">GraphQL</span>
+              <span class="skill-tag">REST APIs</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Cloud &amp; DevOps</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">AWS</span>
+              <span class="skill-tag">Docker</span>
+              <span class="skill-tag">Kubernetes</span>
+              <span class="skill-tag">CI/CD</span>
+              <span class="skill-tag">Terraform</span>
+              <span class="skill-tag">Monitoring</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Databases</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">PostgreSQL</span>
+              <span class="skill-tag">MongoDB</span>
+              <span class="skill-tag">Redis</span>
+              <span class="skill-tag">Elasticsearch</span>
+              <span class="skill-tag">BigQuery</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Leadership &amp; Soft Skills</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Team Leadership</span>
+              <span class="skill-tag">Mentoring</span>
+              <span class="skill-tag">Public Speaking</span>
+              <span class="skill-tag">Technical Writing</span>
+              <span class="skill-tag">Project Management</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    -->
-    <h1 class="profile-name" id="profileName">Mr. Pema Galey</h1>
-    <p class="profile-title" id="profileTitle">Lecturer</p>
-    <div class="contact-info">
-     <div class="contact-item"><span>📧</span> <span id="emailAddress">pemagaley.cst@rub.edu.bt</span>
-     </div>
-     <div class="contact-item"><span>📱</span> <span id="phoneNumber">+975 17682761</span>
-     </div>
-     <div class="contact-item"><span>📍</span> <span id="locationText">College of Sciecne and Technology, Rinchending, Phuentsholing</span>
-     </div>
-    </div>
-   </div><!-- Navigation Tabs -->
-   <div class="nav-tabs"><button class="nav-tab active" onclick="showSection('about')">About Me</button> <button class="nav-tab" onclick="showSection('experience')">Experience</button> <button class="nav-tab" onclick="showSection('education')">Education</button> <button class="nav-tab" onclick="showSection('projects')">Projects</button> <button class="nav-tab" onclick="showSection('publications')">Publications</button> <button class="nav-tab" onclick="showSection('skills')">Skills</button>
-   </div><!-- About Me Section -->
-   <div id="about" class="content-section active">
-    <h2 class="section-title">
-     <div class="section-icon">
-      👋
-     </div> About Me</h2>
-    <div class="about-content" id="aboutText">
-     I am a passionate software engineer and research scientist with over 8 years of experience in developing innovative solutions at the intersection of technology and research. My expertise spans machine learning, distributed systems, and full-stack development. I thrive on solving complex problems and translating cutting-edge research into practical applications that make a real-world impact. Throughout my career, I have led cross-functional teams, published research in top-tier conferences, and built scalable systems serving millions of users. I am particularly interested in AI ethics, sustainable technology, and mentoring the next generation of engineers.
-    </div>
-   </div><!-- Experience Section -->
-   <div id="experience" class="content-section">
-    <h2 class="section-title">
-     <div class="section-icon">
-      💼
-     </div> Professional Experience</h2>
-    <div class="experience-item">
-     <div class="item-header">
-      <div>
-       <div class="item-title">
-        Senior Software Engineer
-       </div>
-       <div class="item-company">
-        Tech Innovations Inc.
-       </div>
-      </div>
-      <div class="item-date">
-       2021 - Present
-      </div>
-     </div>
-     <div class="item-description">
-      Lead a team of 8 engineers developing AI-powered analytics platform. Architected microservices handling 10M+ daily requests. Implemented ML pipelines reducing processing time by 60%. Mentored junior developers and established best practices for code quality and deployment.
-     </div>
-    </div>
-    <div class="experience-item">
-     <div class="item-header">
-      <div>
-       <div class="item-title">
-        Research Scientist
-       </div>
-       <div class="item-company">
-        University Research Lab
-       </div>
-      </div>
-      <div class="item-date">
-       2019 - 2021
-      </div>
-     </div>
-     <div class="item-description">
-      Conducted research in machine learning and natural language processing. Published 12 papers in top-tier conferences including NeurIPS and ICML. Developed novel algorithms for text classification achieving state-of-the-art results. Collaborated with industry partners on technology transfer.
-     </div>
-    </div>
-    <div class="experience-item">
-     <div class="item-header">
-      <div>
-       <div class="item-title">
-        Software Developer
-       </div>
-       <div class="item-company">
-        StartupXYZ
-       </div>
-      </div>
-      <div class="item-date">
-       2017 - 2019
-      </div>
-     </div>
-     <div class="item-description">
-      Full-stack development of web applications using React, Node.js, and PostgreSQL. Built real-time collaboration features serving 50K+ users. Optimized database queries improving response times by 40%. Participated in product planning and user experience design.
-     </div>
-    </div>
-   </div><!-- Education Section -->
-   <div id="education" class="content-section">
-    <h2 class="section-title">
-     <div class="section-icon">
-      🎓
-     </div> Education</h2>
-    <div class="education-item">
-     <div class="item-header">
-      <div>
-       <div class="item-title">
-        Ph.D. in Computer Science
-       </div>
-       <div class="item-institution">
-        Stanford University
-       </div>
-      </div>
-      <div class="item-date">
-       2015 - 2019
-      </div>
-     </div>
-     <div class="item-description">
-      Dissertation: "Advanced Machine Learning Techniques for Natural Language Understanding" <br>
-      Advisor: Prof. John Smith | GPA: 3.9/4.0 <br>
-      Relevant Coursework: Machine Learning, Deep Learning, Natural Language Processing, Distributed Systems
-     </div>
-    </div>
-    <div class="education-item">
-     <div class="item-header">
-      <div>
-       <div class="item-title">
-        M.S. in Computer Science
-       </div>
-       <div class="item-institution">
-        MIT
-       </div>
-      </div>
-      <div class="item-date">
-       2013 - 2015
-      </div>
-     </div>
-     <div class="item-description">
-      Specialization in Artificial Intelligence and Software Engineering <br>
-      Thesis: "Scalable Algorithms for Large-Scale Data Processing" <br>
-      GPA: 3.8/4.0 | Dean's List
-     </div>
-    </div>
-    <div class="education-item">
-     <div class="item-header">
-      <div>
-       <div class="item-title">
-        B.S. in Computer Engineering
-       </div>
-       <div class="item-institution">
-        UC Berkeley
-       </div>
-      </div>
-      <div class="item-date">
-       2009 - 2013
-      </div>
-     </div>
-     <div class="item-description">
-      Magna Cum Laude | Phi Beta Kappa Honor Society <br>
-      Senior Project: "Distributed Computing Framework for Real-time Analytics" <br>
-      GPA: 3.7/4.0
-     </div>
-    </div>
-   </div><!-- Projects Section -->
-   <div id="projects" class="content-section">
-    <h2 class="section-title">
-     <div class="section-icon">
-      🚀
-     </div> Featured Projects</h2>
-    <div class="project-item">
-     <div class="item-header">
-      <div>
-       <div class="item-title">
-        AI-Powered Code Review Assistant
-       </div>
-      </div>
-      <div class="item-date">
-       2023
-      </div>
-     </div>
-     <div class="item-description">
-      Developed an intelligent code review system using transformer models to automatically detect bugs, suggest improvements, and ensure coding standards. Integrated with GitHub and GitLab, serving 1000+ developers across multiple organizations.
-     </div>
-     <div class="project-links"><a href="#" class="project-link" target="_blank" rel="noopener noreferrer">🔗 Live Demo</a> <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">📁 GitHub</a>
-     </div>
-    </div>
-    <div class="project-item">
-     <div class="item-header">
-      <div>
-       <div class="item-title">
-        Real-time Collaboration Platform
-       </div>
-      </div>
-      <div class="item-date">
-       2022
-      </div>
-     </div>
-     <div class="item-description">
-      Built a scalable real-time collaboration platform supporting document editing, video calls, and project management. Implemented using WebRTC, Socket.io, and React. Handles 10K+ concurrent users with sub-100ms latency.
-     </div>
-     <div class="project-links"><a href="#" class="project-link" target="_blank" rel="noopener noreferrer">🔗 Live Demo</a> <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">📄 Case Study</a>
-     </div>
-    </div>
-    <div class="project-item">
-     <div class="item-header">
-      <div>
-       <div class="item-title">
-        Open Source ML Library
-       </div>
-      </div>
-      <div class="item-date">
-       2021
-      </div>
-     </div>
-     <div class="item-description">
-      Created and maintain an open-source machine learning library for text processing with 5K+ GitHub stars. Provides easy-to-use APIs for common NLP tasks including sentiment analysis, named entity recognition, and text classification.
-     </div>
-     <div class="project-links"><a href="#" class="project-link" target="_blank" rel="noopener noreferrer">📁 GitHub</a> <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">📚 Documentation</a>
-     </div>
-    </div>
-   </div><!-- Publications Section -->
-   <div id="publications" class="content-section">
-    <h2 class="section-title">
-     <div class="section-icon">
-      📚
-     </div> Publications &amp; Research</h2>
-    <div class="publication-item">
-     <div class="item-header">
-      <div>
-       <div class="item-title">
-        "Efficient Neural Networks for Large-Scale Text Classification"
-       </div>
-      </div>
-      <div class="item-date">
-       2023
-      </div>
-     </div>
-     <div class="item-description"><strong>Conference:</strong> Neural Information Processing Systems (NeurIPS 2023) <br><strong>Authors:</strong> Jane Doe, John Smith, Alice Johnson <br><strong>Abstract:</strong> We propose a novel architecture for text classification that achieves state-of-the-art results while reducing computational requirements by 40%. Our approach combines attention mechanisms with efficient sparse representations.
-     </div>
-    </div>
-    <div class="publication-item">
-     <div class="item-header">
-      <div>
-       <div class="item-title">
-        "Scalable Machine Learning Systems: A Practitioner's Guide"
-       </div>
-      </div>
-      <div class="item-date">
-       2022
-      </div>
-     </div>
-     <div class="item-description"><strong>Journal:</strong> ACM Transactions on Intelligent Systems and Technology <br><strong>Authors:</strong> Jane Doe, Michael Brown <br><strong>Abstract:</strong> This paper presents best practices and architectural patterns for building scalable machine learning systems in production environments, based on our experience deploying ML models at scale.
-     </div>
-    </div>
-    <div class="publication-item">
-     <div class="item-header">
-      <div>
-       <div class="item-title">
-        "Real-time Natural Language Processing in Distributed Systems"
-       </div>
-      </div>
-      <div class="item-date">
-       2021
-      </div>
-     </div>
-     <div class="item-description"><strong>Conference:</strong> International Conference on Machine Learning (ICML 2021) <br><strong>Authors:</strong> Jane Doe, Sarah Wilson, David Lee <br><strong>Abstract:</strong> We introduce a framework for real-time NLP processing in distributed environments, achieving sub-second response times for complex language understanding tasks.
-     </div>
-    </div>
-   </div><!-- Skills Section -->
-   <div id="skills" class="content-section">
-    <h2 class="section-title">
-     <div class="section-icon">
-      ⚡
-     </div> Skills &amp; Technologies</h2>
-    <div class="skills-grid">
-     <div class="skill-category">
-      <h3>Programming Languages</h3>
-      <div class="skill-tags"><span class="skill-tag">Python</span> <span class="skill-tag">JavaScript</span> <span class="skill-tag">TypeScript</span> <span class="skill-tag">Java</span> <span class="skill-tag">C++</span> <span class="skill-tag">Go</span>
-      </div>
-     </div>
-     <div class="skill-category">
-      <h3>Machine Learning &amp; AI</h3>
-      <div class="skill-tags"><span class="skill-tag">TensorFlow</span> <span class="skill-tag">PyTorch</span> <span class="skill-tag">Scikit-learn</span> <span class="skill-tag">Transformers</span> <span class="skill-tag">OpenAI API</span> <span class="skill-tag">MLflow</span>
-      </div>
-     </div>
-     <div class="skill-category">
-      <h3>Web Technologies</h3>
-      <div class="skill-tags"><span class="skill-tag">React</span> <span class="skill-tag">Node.js</span> <span class="skill-tag">Express</span> <span class="skill-tag">Next.js</span> <span class="skill-tag">GraphQL</span> <span class="skill-tag">REST APIs</span>
-      </div>
-     </div>
-     <div class="skill-category">
-      <h3>Cloud &amp; DevOps</h3>
-      <div class="skill-tags"><span class="skill-tag">AWS</span> <span class="skill-tag">Docker</span> <span class="skill-tag">Kubernetes</span> <span class="skill-tag">CI/CD</span> <span class="skill-tag">Terraform</span> <span class="skill-tag">Monitoring</span>
-      </div>
-     </div>
-     <div class="skill-category">
-      <h3>Databases</h3>
-      <div class="skill-tags"><span class="skill-tag">PostgreSQL</span> <span class="skill-tag">MongoDB</span> <span class="skill-tag">Redis</span> <span class="skill-tag">Elasticsearch</span> <span class="skill-tag">BigQuery</span>
-      </div>
-     </div>
-     <div class="skill-category">
-      <h3>Leadership &amp; Soft Skills</h3>
-      <div class="skill-tags"><span class="skill-tag">Team Leadership</span> <span class="skill-tag">Mentoring</span> <span class="skill-tag">Public Speaking</span> <span class="skill-tag">Technical Writing</span> <span class="skill-tag">Project Management</span>
-      </div>
-     </div>
-    </div>
-   </div>
-  </div>
-  <script>
-        // Configuration object
-        const defaultConfig = {
-            full_name: "Dr. Jane Doe",
-            job_title: "Senior Software Engineer & Research Scientist",
-            about_text: "I am a passionate software engineer and research scientist with over 8 years of experience in developing innovative solutions at the intersection of technology and research. My expertise spans machine learning, distributed systems, and full-stack development. I thrive on solving complex problems and translating cutting-edge research into practical applications that make a real-world impact.\n\nThroughout my career, I have led cross-functional teams, published research in top-tier conferences, and built scalable systems serving millions of users. I am particularly interested in AI ethics, sustainable technology, and mentoring the next generation of engineers.",
-            email_address: "jane.doe@university.edu",
-            phone_number: "+1 (555) 123-4567",
-            location: "San Francisco, CA"
+    <script>
+      // Configuration object
+      const defaultConfig = {
+        profile_image_url: "",
+        full_name: "Mr. Pema Galey",
+        job_title: "Lecturer, Researcher & Application Developer",
+        about_text:
+          "I am a passionate software engineer and research scientist with over 8 years of experience in developing innovative solutions at the intersection of technology and research. My expertise spans machine learning, distributed systems, and full-stack development. I thrive on solving complex problems and translating cutting-edge research into practical applications that make a real-world impact.\n\nThroughout my career, I have led cross-functional teams, published research in top-tier conferences, and built scalable systems serving millions of users. I am particularly interested in AI ethics, sustainable technology, and mentoring the next generation of engineers.",
+        email_address: "pemagaley.cst@rub.edu.bt",
+        phone_number: "+975 17682761",
+        location: "College of Science and Technology, Royal University of Bhutan, Phuentsholing, Bhutan",
+      };
+
+      // Navigation functionality
+      function showSection(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll(".content-section");
+        sections.forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll(".nav-tab");
+        tabs.forEach((tab) => {
+          tab.classList.remove("active");
+        });
+
+        // Show selected section
+        document.getElementById(sectionId).classList.add("active");
+
+        // Add active class to clicked tab
+        event.target.classList.add("active");
+      }
+
+      // Update profile avatar with image or initials
+      function updateAvatar(name, imageUrl) {
+        const initials = name
+          .split(" ")
+          .map((word) => word.charAt(0))
+          .join("")
+          .substring(1, 3);
+        const profileImage = document.getElementById("profileImage");
+        const profileInitials = document.getElementById("profileInitials");
+
+        profileInitials.textContent = initials;
+
+        if (imageUrl && imageUrl.trim() !== "") {
+          profileImage.src = imageUrl;
+          profileImage.style.display = "block";
+          profileInitials.style.display = "none";
+        } else {
+          profileImage.style.display = "none";
+          profileInitials.style.display = "block";
+        }
+      }
+
+      // Element SDK implementation
+      async function onConfigChange(config) {
+        const profileImageUrl =
+          config.profile_image_url || defaultConfig.profile_image_url;
+        const fullName = config.full_name || defaultConfig.full_name;
+        const jobTitle = config.job_title || defaultConfig.job_title;
+        const aboutText = config.about_text || defaultConfig.about_text;
+        const emailAddress =
+          config.email_address || defaultConfig.email_address;
+        const phoneNumber = config.phone_number || defaultConfig.phone_number;
+        const location = config.location || defaultConfig.location;
+
+        // Update profile information
+        document.getElementById("profileName").textContent = fullName;
+        document.getElementById("profileTitle").textContent = jobTitle;
+        document.getElementById("aboutText").textContent = aboutText;
+        document.getElementById("emailAddress").textContent = emailAddress;
+        document.getElementById("phoneNumber").textContent = phoneNumber;
+        document.getElementById("locationText").textContent = location;
+
+        // Update avatar
+        updateAvatar(fullName, profileImageUrl);
+      }
+
+      function mapToCapabilities(config) {
+        return {
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined,
         };
+      }
 
-        // Navigation functionality
-        function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
+      function mapToEditPanelValues(config) {
+        return new Map([
+          [
+            "profile_image_url",
+            config.profile_image_url || defaultConfig.profile_image_url,
+          ],
+          ["full_name", config.full_name || defaultConfig.full_name],
+          ["job_title", config.job_title || defaultConfig.job_title],
+          ["about_text", config.about_text || defaultConfig.about_text],
+          [
+            "email_address",
+            config.email_address || defaultConfig.email_address,
+          ],
+          ["phone_number", config.phone_number || defaultConfig.phone_number],
+          ["location", config.location || defaultConfig.location],
+        ]);
+      }
 
-            // Remove active class from all tabs
-            const tabs = document.querySelectorAll('.nav-tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues,
+        });
+      }
 
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
-
-            // Add active class to clicked tab
-            event.target.classList.add('active');
-        }
-
-        // Update profile avatar initials
-        function updateAvatar(name) {
-            const initials = name.split(' ').map(word => word.charAt(0)).join('').substring(0, 2);
-            document.getElementById('profileAvatar').textContent = initials;
-        }
-
-        // Element SDK implementation
-        async function onConfigChange(config) {
-            const fullName = config.full_name || defaultConfig.full_name;
-            const jobTitle = config.job_title || defaultConfig.job_title;
-            const aboutText = config.about_text || defaultConfig.about_text;
-            const emailAddress = config.email_address || defaultConfig.email_address;
-            const phoneNumber = config.phone_number || defaultConfig.phone_number;
-            const location = config.location || defaultConfig.location;
-
-            // Update profile information
-            document.getElementById('profileName').textContent = fullName;
-            document.getElementById('profileTitle').textContent = jobTitle;
-            document.getElementById('aboutText').textContent = aboutText;
-            document.getElementById('emailAddress').textContent = emailAddress;
-            document.getElementById('phoneNumber').textContent = phoneNumber;
-            document.getElementById('locationText').textContent = location;
-
-            // Update avatar
-            updateAvatar(fullName);
-        }
-
-        function mapToCapabilities(config) {
-            return {
-                recolorables: [],
-                borderables: [],
-                fontEditable: undefined,
-                fontSizeable: undefined
-            };
-        }
-
-        function mapToEditPanelValues(config) {
-            return new Map([
-                ["full_name", config.full_name || defaultConfig.full_name],
-                ["job_title", config.job_title || defaultConfig.job_title],
-                ["about_text", config.about_text || defaultConfig.about_text],
-                ["email_address", config.email_address || defaultConfig.email_address],
-                ["phone_number", config.phone_number || defaultConfig.phone_number],
-                ["location", config.location || defaultConfig.location]
-            ]);
-        }
-
-        // Initialize Element SDK
-        if (window.elementSdk) {
-            window.elementSdk.init({
-                defaultConfig,
-                onConfigChange,
-                mapToCapabilities,
-                mapToEditPanelValues
-            });
-        }
-
-        // Initialize avatar on page load
-        updateAvatar(defaultConfig.full_name);
+      // Initialize avatar on page load
+      updateAvatar(defaultConfig.full_name, defaultConfig.profile_image_url);
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99fe2d5bf590a8e0',t:'MTc2MzM3MTQ4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    <script>
+      (function () {
+        function c() {
+          var b = a.contentDocument || a.contentWindow.document;
+          if (b) {
+            var d = b.createElement("script");
+            d.innerHTML =
+              "window.__CF$cv$params={r:'9a06639c011ca8d6',t:'MTc2MzQ1NzU5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+            b.getElementsByTagName("head")[0].appendChild(d);
+          }
+        }
+        if (document.body) {
+          var a = document.createElement("iframe");
+          a.height = 1;
+          a.width = 1;
+          a.style.position = "absolute";
+          a.style.top = 0;
+          a.style.left = 0;
+          a.style.border = "none";
+          a.style.visibility = "hidden";
+          document.body.appendChild(a);
+          if ("loading" !== document.readyState) c();
+          else if (window.addEventListener)
+            document.addEventListener("DOMContentLoaded", c);
+          else {
+            var e = document.onreadystatechange || function () {};
+            document.onreadystatechange = function (b) {
+              e(b);
+              "loading" !== document.readyState &&
+                ((document.onreadystatechange = e), c());
+            };
+          }
+        }
+      })();
+    </script>
+  </body>
 </html>
